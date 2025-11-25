@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алина & Михаил • 24.08.2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Sacramento&family=Parisienne&family=Allura&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Dancing Script',cursive;background:#fdfaf7;color:#7a2d3a;font-size:1.4rem;line-height:1.6;overflow-x:hidden}
+        
+        /* Анимация открытия приглашения */
+        .invitation-seal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #d2c2b3;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-in-out;
+            padding: 20px;
+        }
+        
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+        
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.2s ease-in-out;
+        }
+        
+        .envelope-open .envelope {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-front, .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            background: #f9f5f0;
+            box-shadow: 0 10px 30px rgba(122, 45, 58, 0.2);
+            border: 2px solid #7a2d3a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .envelope-back {
+            transform: rotateX(180deg);
+            padding: 20px;
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: top;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .envelope-flap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #f9f5f0;
+            border-bottom: 0;
+            z-index: 2;
+        }
+        
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #7a2d3a 0%, #5a202e 100%);
+            border-radius: 8px 8px 0 0;
+            z-index: 1;
+        }
+        
+        .envelope-open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-sides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .envelope-sides::before, .envelope-sides::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-bottom: 110px solid #e8dcd0;
+            z-index: 0;
+        }
+        
+        .envelope-sides::before {
+            left: 0;
+            border-left: 160px solid transparent;
+            border-right: 0px solid transparent;
+        }
+        
+        .envelope-sides::after {
+            right: 0;
+            border-right: 160px solid transparent;
+            border-left: 0px solid transparent;
+        }
+        
+        .seal-container {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: #7a2d3a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #d2c2b3;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(122, 45, 58, 0.5);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            border: 4px solid #d2c2b3;
+            z-index: 10;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .seal-container:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        
+        .seal-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+        
+        .seal-amp {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.2rem;
+            margin: 5px 0;
+        }
+        
+        .seal-instruction {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #7a2d3a;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .invitation-hidden {
+            display: none;
+        }
+        
+        .content-hidden {
+            display: none;
+        }
+        
+        .hero{
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            padding:20px;
+            background:linear-gradient(rgba(210, 194, 179, 0.7), rgba(210, 194, 179, 0.7)), url('flower.jpg') center/cover no-repeat;
+            position:relative
+        }
+        .hero::before{
+            content:'';
+            position:absolute;
+            inset:15px;
+            border:3px solid rgba(122, 45, 58, 0.2);
+            border-radius:25px;
+            pointer-events:none
+        }
+        h1{
+            font-family:'Great Vibes',cursive;
+            font-size:clamp(3.5rem,12vw,9rem);
+            color:#7a2d3a;
+            letter-spacing:3px;
+            z-index:2;
+            line-height: 1.1;
+            margin: 10px 0;
+        }
+        .amp{
+            font-family:'Sacramento',cursive;
+            color:#7a2d3a;
+            font-size:0.7em;
+            vertical-align:0.1em;
+            opacity: 0.8;
+        }
+        .date{
+            font-family:'Parisienne',cursive;
+            font-size:clamp(2.5rem, 6vw, 3.3rem);
+            color:#7a2d3a;
+            margin:20px 0;
+            line-height: 1.3;
+        }
+        .divider{
+            width:80px;
+            height:2px;
+            background:#7a2d3a;
+            display:inline-block;
+            margin:0 15px;
+            opacity: 0.6;
+        }
+        .heart{
+            font-size:4.5rem;
+            animation:bounce 2s infinite;
+            margin-top:20px;
+            color: #7a2d3a;
+        }
+        @keyframes bounce{
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(-15px)}
+        }
+        .section{
+            padding:70px 20px;
+            text-align:center
+        }
+        h2{
+            font-family:'Great Vibes',cursive;
+            font-size:clamp(3.5rem, 8vw, 5.8rem);
+            color:#7a2d3a;
+            margin-bottom:40px;
+            line-height: 1.2;
+        }
+        img{
+            max-width:100%;
+            border:12px solid #fff;
+            border-radius:15px;
+            box-shadow:0 15px 40px rgba(0,0,0,.15);
+            display:block;
+            margin:30px auto;
+        }
+        
+        /* Секция с таймером */
+        .countdown-section {
+            background:#f5f0eb;
+            padding: 70px 20px;
+        }
+        .countdown-title {
+            font-family: 'Allura', cursive;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            color: #7a2d3a;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .countdown-grid{
+            display:grid;
+            grid-template-columns:repeat(2, 1fr);
+            gap:25px;
+            max-width:600px;
+            margin:0 auto;
+        }
+        @media (min-width: 768px) {
+            .countdown-grid {
+                grid-template-columns:repeat(4, 1fr);
+            }
+        }
+        .countdown-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 10px;
+            box-shadow: 0 10px 25px rgba(122, 45, 58, 0.1);
+            text-align: center;
+        }
+        .countdown-item div:first-child{
+            font-size:clamp(2.5rem, 8vw, 4rem);
+            font-weight:bold;
+            color:#7a2d3a;
+            line-height: 1;
+        }
+        .countdown-item div:last-child{
+            font-size:1.2rem;
+            letter-spacing:2px;
+            color:#7a2d3a;
+            margin-top: 10px;
+        }
+
+        /* Блок с фоном ресторана */
+        .venue-wrapper{
+            position:relative;
+            padding:100px 20px;
+            color:#333;
+            background:url('venue.jpg') center/cover no-repeat fixed
+        }
+        .venue-wrapper::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:rgba(253,250,247,0.92)
+        }
+        .venue-content{
+            position:relative;
+            z-index:2;
+            max-width:900px;
+            margin:0 auto;
+            text-align:center
+        }
+        .venue-content h2,.venue-content h3{
+            color:#7a2d3a
+        }
+        .venue-content h3{
+            font-family:'Allura',cursive;
+            font-size:clamp(2.5rem, 6vw, 3.4rem);
+            margin:40px 0 20px
+        }
+        .venue-content p{
+            font-size:1.4rem;
+            margin:15px 0;
+            line-height: 1.5;
+        }
+
+        /* Программа дня - улучшенная версия */
+        .program-wrapper{
+            background:#f5f0eb;
+            padding:80px 20px
+        }
+        .program-content{
+            max-width:800px;
+            margin:0 auto
+        }
+        .program-item{
+            margin:30px 0;
+            text-align:left;
+            display:flex;
+            align-items:center;
+            gap:15px;
+            position:relative;
+            padding:20px;
+            border-radius:15px;
+            background:white;
+            box-shadow:0 8px 20px rgba(122, 45, 58, .1);
+            transition:transform 0.3s ease;
+            flex-wrap: wrap;
+        }
+        .program-item:hover{
+            transform:translateY(-5px)
+        }
+        .program-time{
+            font-family:'Great Vibes',cursive;
+            font-size:clamp(2rem, 5vw, 2.8rem);
+            color:#7a2d3a;
+            min-width:100px;
+            text-align:center
+        }
+        .program-text{
+            font-size:1.4rem;
+            flex:1;
+            min-width: 200px;
+        }
+        .program-icon{
+            font-size:2rem;
+            color:#7a2d3a;
+            margin-right:10px;
+            opacity: 0.7;
+        }
+
+        .rsvp{
+            max-width:650px;
+            margin:0 auto;
+            background:#fff;
+            padding:50px 25px;
+            border-radius:20px;
+            box-shadow:0 20px 50px rgba(122, 45, 58, .1);
+            border:3px solid #d2c2b3
+        }
+        
+        input, button {
+            width:100%;
+            padding:15px;
+            margin:10px 0;
+            border-radius:12px;
+            border:2px solid #d2c2b3;
+            font-family: 'Dancing Script', cursive;
+            font-size:1.3rem;
+            background:#fff;
+            color:#333;
+            font-style: normal !important;
+        }
+        
+        input::placeholder {
+            font-family: 'Dancing Script', cursive;
+            font-style: normal;
+        }
+        
+        button{
+            background:#7a2d3a;
+            color:#fff;
+            border:none;
+            font-size:1.5rem;
+            letter-spacing:2px;
+            cursor:pointer;
+            transition:.3s;
+            margin-top: 20px;
+            font-style: normal;
+        }
+        button:hover{
+            background:#5a202e
+        }
+        .radio-group label{
+            display:block;
+            margin:18px 0;
+            font-size:1.4rem;
+            color:#333;
+            font-style: normal;
+        }
+        .radio-group input[type="radio"]{
+            width:22px;
+            height:22px;
+            margin-right:12px;
+            vertical-align:middle;
+            accent-color:#7a2d3a
+        }
+
+        footer{
+            padding:100px 20px 70px;
+            text-align:center;
+            background: #f5f0eb;
+        }
+        .footer-love,.footer-names{
+            font-family:'Great Vibes',cursive;
+            color:#7a2d3a
+        }
+        .footer-love{
+            font-size:clamp(3rem, 6vw, 4.2rem)
+        }
+        .footer-names{
+            font-size:clamp(3.5rem, 7vw, 5rem);
+            margin:15px 0
+        }
+        .footer-heart{
+            font-size:2.8rem;
+            margin:25px 0;
+            color: #7a2d3a;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Печать для открытия приглашения -->
+<div id="invitationSeal" class="invitation-seal">
+    <div class="envelope-container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-front">
+                <div class="envelope-flap"></div>
+                <div class="envelope-sides"></div>
+                <div class="seal-container" id="sealButton">
+                    <div class="seal-name">Алина</div>
+                    <div class="seal-amp">&</div>
+                    <div class="seal-name">Михаил</div>
+                </div>
+            </div>
+            <div class="envelope-back">
+                <div style="text-align: center; color: #7a2d3a;">
+                    <div style="font-family: 'Great Vibes', cursive; font-size: 1.8rem;">Свадебное приглашение</div>
+                    <div style="font-family: 'Parisienne', cursive; font-size: 1.4rem; margin-top: 10px;">24.08.2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="seal-instruction">Нажмите на печать, чтобы открыть приглашение</p>
+</div>
+
+<!-- Основное содержимое -->
+<div id="mainContent" class="content-hidden">
+    <section class="hero">
+        <p style="font-family:'Allura',cursive;font-size:clamp(2.2rem, 5vw, 3rem);color:#7a2d3a;opacity:0.9">С любовью приглашаем вас</p>
+        <h1>Алина <span class="amp">&</span> Михаил</h1>
+        <p class="date"><span class="divider"></span> 24 августа 2026 <span class="divider"></span></p>
+        <p style="font-family:'Parisienne',cursive;font-size:clamp(2.2rem, 5vw, 2.8rem);color:#7a2d3a">Волгоград</p>
+        <div class="heart">❤️</div>
+    </section>
+
+    <section class="section">
+        <h2>Два сердца — одна любовь</h2>
+        <img src="couple.jpg" alt="Алина и Михаил">
+        <p style="font-family:'Allura',cursive;font-size:clamp(2rem, 4vw, 2.4rem);color:#7a2d3a;margin-top:40px">Начинаем новую главу вместе с вами ❤️</p>
+    </section>
+
+    <section class="countdown-section">
+        <div class="countdown-title">До начала нашего торжества</div>
+        <div class="countdown-grid">
+            <div class="countdown-item"><div id="days">--</div><div>Дней</div></div>
+            <div class="countdown-item"><div id="hours">--</div><div>Часов</div></div>
+            <div class="countdown-item"><div id="minutes">--</div><div>Минут</div></div>
+            <div class="countdown-item"><div id="seconds">--</div><div>Секунд</div></div>
+        </div>
+    </section>
+
+    <!-- Место торжества с фото на фоне -->
+    <section class="venue-wrapper">
+        <div class="venue-content">
+            <h2>Место торжества</h2>
+            <h3>Когда</h3>
+            <p>24 августа 2026<br>Сбор гостей в 14:00</p>
+
+            <h3>Где</h3>
+            <p>Ресторан «Волгоград»<br>ул. Мира, 12<br>Волгоград</p>
+
+            <h3>Дресс-код</h3>
+            <p>Black Tie Creative<br>бежевый • винный • золотой</p>
+        </div>
+    </section>
+
+    <!-- Программа дня - улучшенная версия -->
+    <section class="program-wrapper">
+        <div class="program-content">
+            <h2 style="text-align:center;margin-bottom:50px">Программа дня</h2>
+            <div class="program-item">
+                <div class="program-time">14:00</div>
+                <span class="program-icon">🥂</span>
+                <div class="program-text">Сбор гостей, приветственные коктейли</div>
+            </div>
+            <div class="program-item">
+                <div class="program-time">15:00</div>
+                <span class="program-icon">💍</span>
+                <div class="program-text">Церемония бракосочетания</div>
+            </div>
+            <div class="program-item">
+                <div class="program-time">16:00</div>
+                <span class="program-icon">🍽️</span>
+                <div class="program-text">Праздничный банкет и поздравления</div>
+            </div>
+            <div class="program-item">
+                <div class="program-time">19:00</div>
+                <span class="program-icon">💃</span>
+                <div class="program-text">Первый танец и вечерняя программа</div>
+            </div>
+            <div class="program-item">
+                <div class="program-time">23:00</div>
+                <span class="program-icon">🎂</span>
+                <div class="program-text">Торт и завершение вечера</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="rsvp">
+            <h2>R.S.V.P.</h2>
+            <p style="color:#777;margin-bottom:30px; font-style: normal;">Подтвердите присутствие до 1 июля 2026</p>
+            <form action="https://formspree.io/f/manzjdro" method="POST">
+                <input type="text" name="name" placeholder="Имя и фамилия гостей" required style="font-style: normal;">
+                <div class="radio-group">
+                    <label><input type="radio" name="attending" value="Да, приду(ем) ❤️" required> Да, с удовольствием приду(ем) ❤️</label>
+                    <label><input type="radio" name="attending" value="К сожалению, не смогу"> К сожалению, не смогу</label>
+                </div>
+                <input type="number" name="guests" placeholder="Сколько человек" min="1" style="font-style: normal;">
+                <input type="email" name="_replyto" placeholder="Ваш email" required style="font-style: normal;">
+                <button type="submit">Отправить ответ</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-love">С любовью,</div>
+        <div class="footer-names">Алина и Михаил</div>
+        <div class="footer-heart">❤️</div>
+        <p style="margin-top:30px;opacity:0.8">#AlinaMikhail2026</p>
+    </footer>
+</div>
+
+<script>
+    // Анимация открытия приглашения
+    document.addEventListener('DOMContentLoaded', function() {
+        const seal = document.getElementById('invitationSeal');
+        const sealButton = document.getElementById('sealButton');
+        const envelopeContainer = document.querySelector('.envelope-container');
+        const mainContent = document.getElementById('mainContent');
+        
+        // Открытие по клику на печать
+        sealButton.addEventListener('click', function() {
+            // Анимация открытия конверта
+            envelopeContainer.classList.add('envelope-open');
+            
+            // После анимации открытия конверта показываем содержимое
+            setTimeout(function() {
+                seal.style.opacity = '0';
+                setTimeout(function() {
+                    seal.classList.add('invitation-hidden');
+                    mainContent.classList.remove('content-hidden');
+                }, 1000);
+            }, 1200);
+        });
+    });
+    
+    // Обратный отсчет
+    const wedding = new Date('2026-08-24T14:00:00');
+    function updateCountdown() {
+        const diff = wedding - Date.now();
+        if (diff <= 0) {
+            document.querySelector('.countdown-grid').innerHTML = '<div style="grid-column:1/-1;font-size:clamp(2.5rem, 8vw, 4rem);color:#7a2d3a;padding:20px">❤️ Сегодня наш день! ❤️</div>';
+            return;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hours = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+        const minutes = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+        const seconds = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('minutes').textContent = minutes;
+        document.getElementById('seconds').textContent = seconds;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
