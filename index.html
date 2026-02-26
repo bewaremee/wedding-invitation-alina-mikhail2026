@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Алина & Михаил • 07.08.2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -15,11 +15,8 @@
             line-height:1.5;
             overflow-x:hidden;
             font-weight:300;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Цветовая палитра по дресс-коду */
         :root {
             --burgundy: #800020;
             --cream: #fdf5e6;
@@ -214,110 +211,238 @@
             display: none;
         }
         
-        /* Заглавная страница с фото - без рамки */
-        .hero{
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:flex-end;
-            text-align:center;
-            padding: 0 0 40px 0;
-            background: url('малышарики.jpg') center/cover no-repeat;
-            position:relative
+        /* Заглавная страница с фото - исправленная версия */
+        .hero {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            background-color: var(--cream);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
         }
         
-        .hero::before {
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Фото без обрезания */
+            object-position: center;
+        }
+        
+        /* Полупрозрачный слой для читаемости текста */
+        .hero::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(253, 245, 230, 0.7));
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 2;
             pointer-events: none;
         }
         
-        .hero-content {
+        .hero-top {
             position: relative;
-            z-index: 2;
-            background: rgba(253, 245, 230, 0.8);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            padding: 25px 20px;
+            z-index: 3;
             width: 100%;
-            max-width: 500px;
-            margin-bottom: 0;
+            padding: 15px 15px 0;
+            text-align: center;
+            margin-top: 5%;
+        }
+        
+        .hero-bottom {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            padding: 0 15px 15px;
+            text-align: center;
+            margin-bottom: 5%;
         }
         
         .hero-subtitle {
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(1.2rem, 4vw, 1.5rem);
-            color:var(--burgundy);
-            opacity:0.9;
-            font-weight:300;
-            letter-spacing:2px;
-            margin-bottom: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--burgundy);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            padding: 4px 16px;
+            background: rgba(253, 245, 230, 0.4);
+            border-radius: 30px;
+            backdrop-filter: blur(2px);
         }
         
-        h1{
-            font-family:'Cormorant Garamond', serif;
-            font-size:clamp(2.2rem, 8vw, 3.5rem);
-            color:var(--burgundy);
-            letter-spacing:3px;
-            z-index:2;
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--burgundy);
+            letter-spacing: 2px;
             line-height: 1.1;
-            margin: 5px 0;
-            font-weight: 600;
+            margin: 0 0 3px 0;
+            font-weight: 700;
             text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
         }
         
-        .amp{
-            font-family:'Cormorant Garamond', serif;
-            color:var(--burgundy);
-            font-size:0.7em;
-            vertical-align:0.1em;
-            opacity: 0.8;
-            font-weight: 400;
+        .amp {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--burgundy);
+            font-size: 0.7em;
+            vertical-align: 0.1em;
+            opacity: 0.9;
         }
         
-        .date{
-            font-family:'Cormorant Garamond', serif;
-            font-size:clamp(1.5rem, 5vw, 2rem);
-            color:var(--burgundy);
-            margin:10px 0;
+        .date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--burgundy);
+            margin: 2px 0;
             line-height: 1.3;
             font-weight: 400;
             letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
         }
         
-        .divider{
-            width: 30px;
+        .divider {
+            width: 20px;
             height: 1px;
-            background:var(--burgundy);
-            display:inline-block;
-            margin:0 10px;
-            opacity: 0.4;
+            background: var(--burgundy);
+            display: inline-block;
+            margin: 0 5px;
+            opacity: 0.5;
         }
         
         .location {
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(1.2rem, 4vw, 1.5rem);
-            color:var(--burgundy);
-            font-weight:300;
-            letter-spacing: 2px;
-        }
-        
-        .heart{
-            font-size:2rem;
-            animation:bounce 2s infinite;
-            margin-top:10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
             color: var(--burgundy);
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 2px 0;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
         }
         
-        @keyframes bounce{
-            0%,100%{transform:translateY(0)}
-            50%{transform:translateY(-10px)}
+        .heart {
+            font-size: 1.8rem;
+            animation: bounce 2s infinite;
+            margin-top: 5px;
+            color: var(--burgundy);
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Мобильные стили */
+        @media (max-width: 768px) {
+            .hero-image img {
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .hero-top {
+                padding: 10px 10px 0;
+                margin-top: 2%;
+            }
+            
+            .hero-bottom {
+                padding: 0 10px 10px;
+                margin-bottom: 2%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .date, .location {
+                font-size: 1.1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.9rem;
+                padding: 3px 12px;
+            }
+            
+            .divider {
+                width: 15px;
+                margin: 0 4px;
+            }
+            
+            .heart {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-top {
+                padding: 8px 8px 0;
+                margin-top: 1%;
+            }
+            
+            .hero-bottom {
+                padding: 0 8px 8px;
+                margin-bottom: 1%;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .date, .location {
+                font-size: 1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.8rem;
+                padding: 2px 10px;
+            }
+            
+            .divider {
+                width: 12px;
+                margin: 0 3px;
+            }
+            
+            .heart {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .date, .location {
+                font-size: 0.9rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.7rem;
+            }
+            
+            .divider {
+                width: 10px;
+                margin: 0 2px;
+            }
         }
         
         .section{
@@ -479,10 +604,6 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             text-align: center;
-        }
-        
-        .dress-code h3 span {
-            letter-spacing: 0;
         }
         
         .color-palette {
@@ -704,230 +825,203 @@
             opacity: 0.8;
             margin-top: 15px;
         }
-        
-        /* Улучшения для мобильных */
-        @media (max-width: 480px) {
-            body {
-                font-size: 1rem;
-            }
-            
-            .hero-content {
-                padding: 20px 15px;
-            }
-            
-            .seal-container {
-                width: min(100px, 28vw);
-                height: min(100px, 28vw);
-            }
-            
-            .dress-code-item {
-                padding: 12px;
-            }
-            
-            .color-dot {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .details-text {
-                padding: 20px 12px;
-            }
-            
-            .details-text p {
-                font-size: 0.9rem;
-            }
-        }
     </style>
 </head>
 <body>
-
-<!-- Печать для открытия приглашения -->
-<div id="invitationSeal" class="invitation-seal">
-    <div class="envelope-container">
-        <div class="envelope" id="envelope">
-            <div class="envelope-front">
-                <div class="envelope-flap"></div>
-                <div class="envelope-sides"></div>
-                <div class="seal-container" id="sealButton">
-                    <div class="seal-name">АЛИНА</div>
-                    <div class="seal-amp">&</div>
-                    <div class="seal-name">МИХАИЛ</div>
+    <!-- Печать для открытия приглашения -->
+    <div id="invitationSeal" class="invitation-seal">
+        <div class="envelope-container">
+            <div class="envelope" id="envelope">
+                <div class="envelope-front">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-sides"></div>
+                    <div class="seal-container" id="sealButton">
+                        <div class="seal-name">АЛИНА</div>
+                        <div class="seal-amp">&</div>
+                        <div class="seal-name">МИХАИЛ</div>
+                    </div>
                 </div>
-            </div>
-            <div class="envelope-back">
-                <div style="text-align: center; color: var(--burgundy);">
-                    <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 600;">ПРИГЛАШЕНИЕ</div>
-                    <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 4vw, 1.2rem); margin-top: 5px; font-weight: 300;">07.08.2026</div>
+                <div class="envelope-back">
+                    <div style="text-align: center; color: var(--burgundy);">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 600;">ПРИГЛАШЕНИЕ</div>
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 4vw, 1.2rem); margin-top: 5px; font-weight: 300;">07.08.2026</div>
+                    </div>
                 </div>
             </div>
         </div>
+        <p class="seal-instruction">НАЖМИТЕ НА ПЕЧАТЬ</p>
     </div>
-    <p class="seal-instruction">НАЖМИТЕ НА ПЕЧАТЬ</p>
-</div>
-
-<!-- Основное содержимое -->
-<div id="mainContent" class="content-hidden">
-    <!-- Заглавная страница с фото - без рамки -->
-    <section class="hero">
-        <div class="hero-content">
-            <p class="hero-subtitle">С ЛЮБОВЬЮ ПРИГЛАШАЕМ ВАС</p>
-            <h1>АЛИНА <span class="amp">&</span> МИХАИЛ</h1>
-            <p class="date"><span class="divider"></span> 07.08.2026 <span class="divider"></span></p>
-            <p class="location">ВОЛГОГРАД</p>
-            <div class="heart">❤️</div>
-        </div>
-    </section>
-
-    <section class="section">
-        <h2>ДВА СЕРДЦА — ОДНА ЛЮБОВЬ</h2>
-        <img src="couple.jpg" alt="Алина и Михаил">
-        <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem, 4vw, 1.5rem);color:var(--burgundy);margin-top:25px;font-weight:300">НАЧИНАЕМ НОВУЮ ГЛАВУ ВМЕСТЕ С ВАМИ ❤️</p>
-    </section>
-
-    <section class="countdown-section">
-        <div class="countdown-title">ДО НАЧАЛА ТОРЖЕСТВА</div>
-        <div class="countdown-grid">
-            <div class="countdown-item"><div id="days">--</div><div>ДНЕЙ</div></div>
-            <div class="countdown-item"><div id="hours">--</div><div>ЧАСОВ</div></div>
-            <div class="countdown-item"><div id="minutes">--</div><div>МИНУТ</div></div>
-            <div class="countdown-item"><div id="seconds">--</div><div>СЕКУНД</div></div>
-        </div>
-    </section>
-
-    <!-- Место торжества -->
-    <section class="venue-wrapper">
-        <div class="venue-content">
-            <h2>МЕСТО ТОРЖЕСТВА</h2>
-            <h3>СБОР ГОСТЕЙ</h3>
-            <p>07 АВГУСТА 2026 / 15:00</p>
-
-            <h3>НАЧАЛО БАНКЕТА</h3>
-            <p>16:00</p>
-
-            <h3>ГДЕ</h3>
-            <p>РЕСТОРАН «ВОЛГОГРАД»<br>УЛ. МИРА, 12</p>
-        </div>
-    </section>
-
-    <!-- Дресс-код и Детали -->
-    <section class="details-section">
-        <div class="details-content">
-            <!-- Дресс-код -->
-            <div class="dress-code">
-                <h3>DRESS-CODE</h3>
-                
-                <div class="color-palette">
-                    <div class="color-item">
-                        <div class="color-dot" style="background: #fdf5e6; border: 2px solid var(--burgundy);"></div>
-                        <div class="color-name">МОЛОЧНЫЙ</div>
-                    </div>
-                    <div class="color-item">
-                        <div class="color-dot" style="background: #800020;"></div>
-                        <div class="color-name">БУРГУНДИ</div>
-                    </div>
-                    <div class="color-item">
-                        <div class="color-dot" style="background: #222222;"></div>
-                        <div class="color-name">ЧЕРНЫЙ</div>
-                    </div>
-                </div>
-
-                <div class="dress-code-item">
-                    <h4>ДЛЯ ДЕВУШЕК</h4>
-                    <p>МОЛОЧНЫЙ И БУРГУНДИ В ОДЕЖДЕ ИЛИ АКСЕССУАРАХ</p>
-                </div>
-
-                <div class="dress-code-item">
-                    <h4>ДЛЯ МУЖЧИН</h4>
-                    <p>ЧЕРНЫЙ КОСТЮМ И БЕЛАЯ РУБАШКА С АКЦЕНТАМИ БУРГУНДИ</p>
-                </div>
-            </div>
-
-            <!-- Детали с эмодзи -->
-            <div class="details-text">
-                <p>Если вы захотите подарить нам букет,</p>
-                <p>то предлагаем не мучить цветы долгой дорогой</p>
-                <p>и заменить их бутылочкой любого приятного напитка,</p>
-                <p>которым мы сможем наслаждаться вместе</p>
-                <p>с вами долгими вечерами.</p>
-                <div class="emoji">🍷 ✨ 🥂</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="rsvp">
-            <h2 style="font-size: clamp(2rem, 6vw, 2.5rem); margin-bottom: 15px;">R.S.V.P.</h2>
-            <p style="color:#666;margin-bottom:20px; font-style: normal; font-weight: 300; font-size: 0.95rem;">ПОДТВЕРДИТЕ ПРИСУТСТВИЕ ДО 1 ИЮЛЯ 2026</p>
-            
-            <!-- Telegram блок - без @ -->
-            <div class="telegram-note">
-                <p>А также для подтверждения</p>
-                <p>вы можете записать нам кружочек в Telegram</p>
-                <span class="highlight">С ФРАЗОЙ "ГОРЬКО!"</span>
-            </div>
-            
-            <form action="https://formspree.io/f/manzjdro" method="POST">
-                <input type="text" name="name" placeholder="Имя и фамилия гостей" required style="font-style: normal;">
-                <div class="radio-group">
-                    <label><input type="radio" name="attending" value="Да, приду(ем) ❤️" required> ❤️ Да, с удовольствием приду(ем)</label>
-                    <label><input type="radio" name="attending" value="К сожалению, не смогу"> 🤍 К сожалению, не смогу</label>
-                </div>
-                <input type="number" name="guests" placeholder="Количество гостей" min="1" style="font-style: normal;">
-                <input type="email" name="_replyto" placeholder="Ваш email" required style="font-style: normal;">
-                <button type="submit">ОТПРАВИТЬ</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-love">С ЛЮБОВЬЮ,</div>
-        <div class="footer-names">АЛИНА И МИХАИЛ</div>
-        <div class="footer-heart">❤️</div>
-        <div class="footer-hashtag">#AlinaMikhail2026</div>
-    </footer>
-</div>
-
-<script>
-    // Анимация открытия приглашения
-    document.addEventListener('DOMContentLoaded', function() {
-        const seal = document.getElementById('invitationSeal');
-        const sealButton = document.getElementById('sealButton');
-        const envelopeContainer = document.querySelector('.envelope-container');
-        const mainContent = document.getElementById('mainContent');
-        
-        // Открытие по клику на печать
-        sealButton.addEventListener('click', function() {
-            envelopeContainer.classList.add('envelope-open');
-            
-            setTimeout(function() {
-                seal.style.opacity = '0';
-                setTimeout(function() {
-                    seal.classList.add('invitation-hidden');
-                    mainContent.classList.remove('content-hidden');
-                }, 800);
-            }, 800);
-        });
-    });
     
-    // Обратный отсчет
-    const wedding = new Date('2026-08-07T15:00:00');
-    function updateCountdown() {
-        const diff = wedding - Date.now();
-        if (diff <= 0) {
-            document.querySelector('.countdown-grid').innerHTML = '<div style="grid-column:1/-1;font-size:clamp(1.5rem, 5vw, 2rem);color:var(--burgundy);padding:15px;font-family:Cormorant Garamond;font-weight:300">❤️ СЕГОДНЯ НАШ ДЕНЬ! ❤️</div>';
-            return;
+    <!-- Основное содержимое -->
+    <div id="mainContent" class="content-hidden">
+        <!-- Заглавная страница с фото - исправленная -->
+        <section class="hero">
+            <div class="hero-image">
+                <img src="малышарики.jpg" alt="фон">
+            </div>
+            
+            <div class="hero-top">
+                <p class="hero-subtitle">С ЛЮБОВЬЮ ПРИГЛАШАЕМ ВАС</p>
+            </div>
+            
+            <div class="hero-bottom">
+                <h1>АЛИНА <span class="amp">&</span> МИХАИЛ</h1>
+                <p class="date"><span class="divider"></span> 07.08.2026 <span class="divider"></span></p>
+                <p class="location">ВОЛГОГРАД</p>
+                <div class="heart">❤️</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>ДВА СЕРДЦА — ОДНА ЛЮБОВЬ</h2>
+            <img src="couple.jpg" alt="Алина и Михаил">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem, 4vw, 1.5rem);color:var(--burgundy);margin-top:25px;font-weight:300">НАЧИНАЕМ НОВУЮ ГЛАВУ ВМЕСТЕ С ВАМИ ❤️</p>
+        </section>
+
+        <section class="countdown-section">
+            <div class="countdown-title">ДО НАЧАЛА ТОРЖЕСТВА</div>
+            <div class="countdown-grid">
+                <div class="countdown-item"><div id="days">--</div><div>ДНЕЙ</div></div>
+                <div class="countdown-item"><div id="hours">--</div><div>ЧАСОВ</div></div>
+                <div class="countdown-item"><div id="minutes">--</div><div>МИНУТ</div></div>
+                <div class="countdown-item"><div id="seconds">--</div><div>СЕКУНД</div></div>
+            </div>
+        </section>
+
+        <!-- Место торжества -->
+        <section class="venue-wrapper">
+            <div class="venue-content">
+                <h2>МЕСТО ТОРЖЕСТВА</h2>
+                <h3>СБОР ГОСТЕЙ</h3>
+                <p>07 АВГУСТА 2026 / 15:00</p>
+
+                <h3>НАЧАЛО БАНКЕТА</h3>
+                <p>16:00</p>
+
+                <h3>ГДЕ</h3>
+                <p>РЕСТОРАН «ВОЛГОГРАД»<br>УЛ. МИРА, 12</p>
+            </div>
+        </section>
+
+        <!-- Дресс-код и Детали -->
+        <section class="details-section">
+            <div class="details-content">
+                <!-- Дресс-код -->
+                <div class="dress-code">
+                    <h3>DRESS-CODE</h3>
+                    
+                    <div class="color-palette">
+                        <div class="color-item">
+                            <div class="color-dot" style="background: #fdf5e6; border: 2px solid var(--burgundy);"></div>
+                            <div class="color-name">МОЛОЧНЫЙ</div>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-dot" style="background: #800020;"></div>
+                            <div class="color-name">БУРГУНДИ</div>
+                        </div>
+                        <div class="color-item">
+                            <div class="color-dot" style="background: #222222;"></div>
+                            <div class="color-name">ЧЕРНЫЙ</div>
+                        </div>
+                    </div>
+
+                    <div class="dress-code-item">
+                        <h4>ДЛЯ ДЕВУШЕК</h4>
+                        <p>МОЛОЧНЫЙ И БУРГУНДИ В ОДЕЖДЕ ИЛИ АКСЕССУАРАХ</p>
+                    </div>
+
+                    <div class="dress-code-item">
+                        <h4>ДЛЯ МУЖЧИН</h4>
+                        <p>ЧЕРНЫЙ КОСТЮМ И БЕЛАЯ РУБАШКА С АКЦЕНТАМИ БУРГУНДИ</p>
+                    </div>
+                </div>
+
+                <!-- Детали с эмодзи -->
+                <div class="details-text">
+                    <p>Если вы захотите подарить нам букет,</p>
+                    <p>то предлагаем не мучить цветы долгой дорогой</p>
+                    <p>и заменить их бутылочкой любого приятного напитка,</p>
+                    <p>которым мы сможем наслаждаться вместе</p>
+                    <p>с вами долгими вечерами.</p>
+                    <div class="emoji">🍷 ✨ 🥂</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="rsvp">
+                <h2 style="font-size: clamp(2rem, 6vw, 2.5rem); margin-bottom: 15px;">R.S.V.P.</h2>
+                <p style="color:#666;margin-bottom:20px; font-style: normal; font-weight: 300; font-size: 0.95rem;">ПОДТВЕРДИТЕ ПРИСУТСТВИЕ ДО 1 ИЮЛЯ 2026</p>
+                
+                <!-- Telegram блок -->
+                <div class="telegram-note">
+                    <p>А также для подтверждения</p>
+                    <p>вы можете записать нам кружочек в Telegram</p>
+                    <span class="highlight">С ФРАЗОЙ "ГОРЬКО!"</span>
+                </div>
+                
+                <form action="https://formspree.io/f/manzjdro" method="POST">
+                    <input type="text" name="name" placeholder="Имя и фамилия гостей" required style="font-style: normal;">
+                    <div class="radio-group">
+                        <label><input type="radio" name="attending" value="Да, приду(ем) ❤️" required> ❤️ Да, с удовольствием приду(ем)</label>
+                        <label><input type="radio" name="attending" value="К сожалению, не смогу"> 🤍 К сожалению, не смогу</label>
+                    </div>
+                    <input type="number" name="guests" placeholder="Количество гостей" min="1" style="font-style: normal;">
+                    <input type="email" name="_replyto" placeholder="Ваш email" required style="font-style: normal;">
+                    <button type="submit">ОТПРАВИТЬ</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-love">С ЛЮБОВЬЮ,</div>
+            <div class="footer-names">АЛИНА И МИХАИЛ</div>
+            <div class="footer-heart">❤️</div>
+            <div class="footer-hashtag">#AlinaMikhail2026</div>
+        </footer>
+    </div>
+
+    <script>
+        // Анимация открытия приглашения
+        document.addEventListener('DOMContentLoaded', function() {
+            const seal = document.getElementById('invitationSeal');
+            const sealButton = document.getElementById('sealButton');
+            const envelopeContainer = document.querySelector('.envelope-container');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Открытие по клику на печать
+            sealButton.addEventListener('click', function() {
+                envelopeContainer.classList.add('envelope-open');
+                
+                setTimeout(function() {
+                    seal.style.opacity = '0';
+                    setTimeout(function() {
+                        seal.classList.add('invitation-hidden');
+                        mainContent.classList.remove('content-hidden');
+                    }, 800);
+                }, 800);
+            });
+        });
+        
+        // Обратный отсчет
+        const wedding = new Date('2026-08-07T15:00:00');
+        function updateCountdown() {
+            const diff = wedding - Date.now();
+            if (diff <= 0) {
+                document.querySelector('.countdown-grid').innerHTML = '<div style="grid-column:1/-1;font-size:clamp(1.5rem, 5vw, 2rem);color:var(--burgundy);padding:15px;font-family:Cormorant Garamond;font-weight:300">❤️ СЕГОДНЯ НАШ ДЕНЬ! ❤️</div>';
+                return;
+            }
+            const days = Math.floor(diff / 86400000);
+            const hours = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+            const minutes = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+            const seconds = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
         }
-        const days = Math.floor(diff / 86400000);
-        const hours = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-        const minutes = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-        const seconds = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-</script>
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
